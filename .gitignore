@@ -1,0 +1,13 @@
+__pycache__/
+.venv/
+out/
+*.bin
+*.elf
+*.o
+*.app
+*.status
+backup.json
+build.json
+operation.json
+payloads.json
+!patches/keymode-v3.bin
