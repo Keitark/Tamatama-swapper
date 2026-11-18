@@ -1,0 +1,24 @@
+Tamatama-swapper
+Copyright 2026 Keitark contributors
+
+The host tool and key handler are GPL-3.0-or-later. The shared NAND reader
+and writer sources retain their GPL-2.0-or-later notices. The SRAM bridge
+sources stage1.c, stage1_start.S, stage1.ld and v100_usb.h come from the
+Keitark/crystal-display project under Apache-2.0. See LICENSE and
+LICENSES/Apache-2.0.txt for the license texts.
+
+NAND controller command and register research references:
+https://github.com/SiarheiVolkau/actions-hacking/blob/7299651793c2021c3f3c101940b7f778f5d46ee7/common/nand.c
+https://github.com/Keitark/tamatama-extractor
+
+The host imports the loader encoding and transport from a separate checkout:
+https://github.com/BlackLikeaCat/actions-adfu-tool/tree/91c8f4709c5d36f916baa2109900df6b95dc396f
+
+From the repository root, rebuild the shipped handler with GNU binutils:
+
+    mipsel-linux-gnu-as -EL -mips32r2 -o patches/keymode-v3.o patches/keymode-v3.S
+    mipsel-linux-gnu-objcopy -O binary -j .text patches/keymode-v3.o patches/keymode-v3.bin
+
+The binary contains the assembled key handler. The tool copies the displaced
+instructions from the user's stock VIDEO.APP into the handler when preparing
+the on-device payload.
